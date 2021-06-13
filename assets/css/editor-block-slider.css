@@ -1,0 +1,23 @@
+.wp-block-event-slider {
+	background: #3f39ff;
+	padding: 45px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.event-slider-url {
+	font-family: serif;
+	font-size: 24px;
+	color: #fff;
+	padding-bottom: 30px;
+	margin-bottom: 0;
+}
+
+/*.event-slider-button {
+	background: #000;
+	border: 0px;
+	border-radius: 5px;
+	padding: 12px 35px;
+	color: #fff;
+	font-family: sans-serif;
+}*/

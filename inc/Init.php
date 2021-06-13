@@ -18,6 +18,12 @@ final class Init
 			Pages\Admin::class,
 			Base\Enqueue::class,
 			Base\SettingLinks::class,
+			Base\EventCPT::class,
+			Base\TaxonomyEventType::class,
+			Base\EventCustomField::class,
+			Base\EventTypeWebinarLimit10ShortCode::class,
+			Base\EventCustomApi::class,
+			Base\EventSliderGutenbergBlock::class,
 		];
 	}
 
