@@ -15,9 +15,12 @@ class EventCustomApi extends BaseController
 
 	public function custom_api_display_latest_event() {
 	    register_rest_route( 'event/api/v1', '/latest-event', array(
-	        'methods' => 'GET',
+	        'methods' =>'GET',
 	        'callback' => array($this,'custom_api_display_latest_event_callback'),
-	        'permission_callback' => '__return_true'
+	        'args'	=> array(),
+	         'permission_callback' => function () {
+			      return true;
+			    }
 	    ));
 	}
 

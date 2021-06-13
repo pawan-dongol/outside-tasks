@@ -35,7 +35,7 @@ register_activation_hook( __FILE__, 'activate_ot_event_plugin' );
 * The code that runs during plugin deactication
 */
 function deactivate_ot_event_plugin(){
-	Inc\Base\Deactivate::activate();	
+	Inc\Base\Deactivate::deactivate();	
 }
 register_deactivation_hook( __FILE__, 'deactivate_ot_event_plugin' );
 

@@ -15,13 +15,13 @@ class EventCustomField
 
 		add_action( 'save_post', array($this,'_event_customfield_meta_save_metabox'), 1, 2 );
 
-		add_action( 'save_post', array($this, '_event_customfield_meta_save_revisions' ) );
+		// add_action( 'save_post', array($this, '_event_customfield_meta_save_revisions' ) );
 
-		add_action( 'wp_restore_post_revision', array( $this, '_event_customfield_meta_restore_revisions'), 10, 2 );
+		// add_action( 'wp_restore_post_revision', array( $this, '_event_customfield_meta_restore_revisions'), 10, 2 );
 
-		add_filter( '_wp_post_revision_fields', array( $this, '_event_customfield_meta_get_revisions_fields' ) );
+		// add_filter( '_wp_post_revision_fields', array( $this, '_event_customfield_meta_get_revisions_fields' ) );
 
-		add_filter( '_wp_post_revision_field_my_meta', array( $this,'_event_customfield_meta_display_revisions_fields') , 10, 2 );
+		// add_filter( '_wp_post_revision_field_my_meta', array( $this,'_event_customfield_meta_display_revisions_fields') , 10, 2 );
 	}
 
 	public function _event_customfield_meta_create_metabox() {
@@ -35,23 +35,6 @@ class EventCustomField
 	    );
 	}
 
-
-	/**
-	 * Create the metabox default values
-	 * This allows us to save multiple values in an array, reducing the size of our database.
-	 * Setting defaults helps avoid "array key doesn't exit" issues.
-	 * @todo
-	 */
-	function _event_customfield_meta_metabox_defaults() {
-	    return array(
-	        'event_location'=>'',
-	        'event_time'=>'',
-	        'event_start_date' => '',
-	        'event_end_date' => '',
-	        'event_price' => '',
-	    );
-	}
-
 	/**
 	 * Render the metabox markup
 	 * This is the function called in `_event_customfield_meta_create_metabox()`
@@ -59,7 +42,13 @@ class EventCustomField
 
 	function _event_customfield_meta_render_metabox($post) {
 	    $saved = get_post_meta( $post->ID, '_event_customfield_meta', true ); // Get the saved values
-	    $defaults = $this->_event_customfield_meta_metabox_defaults(); // Get the default values
+	    $defaults = array(
+	        'event_location'=>'',
+	        'event_time'=>'',
+	        'event_start_date' => '',
+	        'event_end_date' => '',
+	        'event_price' => '',
+	    );
 	    $details = wp_parse_args( $saved, $defaults ); // Merge the two in case any fields don't exist in the saved data
     ?>
 
@@ -149,84 +138,84 @@ class EventCustomField
 	    update_post_meta( $post->ID, '_event_customfield_meta', $sanitized );
 	}
 
-	//
-	// Save a copy to our revision history
-	// This is optional, and potentially undesireable for certain data types.
-	// Restoring a a post to an old version will also update the metabox.
-	/**
-	 * Save additional_infos data to revisions
-	 * @param  Number $post_id The post ID
-	 */
-	function _event_customfield_meta_save_revisions( $post_id ) {
-	    // Check if it's a revision
-	    $parent_id = wp_is_post_revision( $post_id );
-	    // If is revision
-	    if ( $parent_id ) {
-	        // Get the saved data
-	        $parent = get_post( $parent_id );
-	        $details = get_post_meta( $parent->ID, '_event_customfield_meta', true );
-	        // If data exists and is an array, add to revision
-	        if ( !empty( $details ) && is_array( $details ) ) {
-	            // Get the defaults
-	            $defaults = _event_customfield_meta_metabox_defaults();
-	            // For each default item
-	            foreach ( $defaults as $key => $value ) {
-	                // If there's a saved value for the field, save it to the version history
-	                if ( array_key_exists( $key, $details ) ) {
-	                    add_metadata( 'post', $post_id, '_event_customfield_meta_' . $key, $details[$key] );
-	                }
-	            }
-	        }
-	    }
-	}
+// /*	//
+// 	// Save a copy to our revision history
+// 	// This is optional, and potentially undesireable for certain data types.
+// 	// Restoring a a post to an old version will also update the metabox.
+// 	/**
+// 	 * Save additional_infos data to revisions
+// 	 * @param  Number $post_id The post ID
+// 	 */
+// 	function _event_customfield_meta_save_revisions( $post_id ) {
+// 	    // Check if it's a revision
+// 	    $parent_id = wp_is_post_revision( $post_id );
+// 	    // If is revision
+// 	    if ( $parent_id ) {
+// 	        // Get the saved data
+// 	        $parent = get_post( $parent_id );
+// 	        $details = get_post_meta( $parent->ID, '_event_customfield_meta', true );
+// 	        // If data exists and is an array, add to revision
+// 	        if ( !empty( $details ) && is_array( $details ) ) {
+// 	            // Get the defaults
+// 	            $defaults = _event_customfield_meta_metabox_defaults();
+// 	            // For each default item
+// 	            foreach ( $defaults as $key => $value ) {
+// 	                // If there's a saved value for the field, save it to the version history
+// 	                if ( array_key_exists( $key, $details ) ) {
+// 	                    add_metadata( 'post', $post_id, '_event_customfield_meta_' . $key, $details[$key] );
+// 	                }
+// 	            }
+// 	        }
+// 	    }
+// 	}
 
-	/**
-	 * Restore additional_infos data with post revisions
-	 * @param  Number $post_id     The post ID
-	 * @param  Number $revision_id The revision ID
-	 */
-	function _event_customfield_meta_restore_revisions( $post_id, $revision_id ) {
-	    // Variables
-	    $post = get_post( $post_id ); // The post
-	    $revision = get_post( $revision_id ); // The revision
-	    $defaults = _event_customfield_meta_metabox_defaults(); // The default values
-	    $details = array(); // An empty array for our new metadata values
-	    // Update content
-	    // For each field
-	    foreach ( $defaults as $key => $value ) {
-	        // Get the revision history version
-	        $detail_revision = get_metadata( 'post', $revision->ID, '_event_customfield_meta_' . $key, true );
-	        // If a historic version exists, add it to our new data
-	        if ( isset( $detail_revision ) ) {
-	            $details[$key] = $detail_revision;
-	        }
-	    }
-	    // Replace our saved data with the old version
-	    update_post_meta( $post_id, '_event_customfield_meta', $details );
-	}
+// 	/**
+// 	 * Restore additional_infos data with post revisions
+// 	 * @param  Number $post_id     The post ID
+// 	 * @param  Number $revision_id The revision ID
+// 	 */
+// 	function _event_customfield_meta_restore_revisions( $post_id, $revision_id ) {
+// 	    // Variables
+// 	    $post = get_post( $post_id ); // The post
+// 	    $revision = get_post( $revision_id ); // The revision
+// 	    $defaults = _event_customfield_meta_metabox_defaults(); // The default values
+// 	    $details = array(); // An empty array for our new metadata values
+// 	    // Update content
+// 	    // For each field
+// 	    foreach ( $defaults as $key => $value ) {
+// 	        // Get the revision history version
+// 	        $detail_revision = get_metadata( 'post', $revision->ID, '_event_customfield_meta_' . $key, true );
+// 	        // If a historic version exists, add it to our new data
+// 	        if ( isset( $detail_revision ) ) {
+// 	            $details[$key] = $detail_revision;
+// 	        }
+// 	    }
+// 	    // Replace our saved data with the old version
+// 	    update_post_meta( $post_id, '_event_customfield_meta', $details );
+// 	}
 
-	/**
-	 * Get the data to display on the revisions page
-	 * @param  Array $fields The fields
-	 * @return Array The fields
-	 */
-	function _event_customfield_meta_get_revisions_fields( $fields ) {
-	    // Get our default values
-	    $defaults = _event_customfield_meta_metabox_defaults();
-	    // For each field, use the key as the title
-	    foreach ( $defaults as $key => $value ) {
-	        $fields['_event_customfield_meta_' . $key] = ucfirst( $key );
-	    }
-	    return $fields;
-	}
+// 	/**
+// 	 * Get the data to display on the revisions page
+// 	 * @param  Array $fields The fields
+// 	 * @return Array The fields
+// 	 */
+// 	function _event_customfield_meta_get_revisions_fields( $fields ) {
+// 	    // Get our default values
+// 	    $defaults = _event_customfield_meta_metabox_defaults();
+// 	    // For each field, use the key as the title
+// 	    foreach ( $defaults as $key => $value ) {
+// 	        $fields['_event_customfield_meta_' . $key] = ucfirst( $key );
+// 	    }
+// 	    return $fields;
+// 	}
 
-	/**
-	 * Display the data on the revisions page
-	 * @param  String|Array $value The field value
-	 * @param  Array        $field The field
-	 */
-	function _event_customfield_meta_display_revisions_fields( $value, $field ) {
-	    global $revision;
-	    return get_metadata( 'post', $revision->ID, $field, true );
-	}
+// 	/**
+// 	 * Display the data on the revisions page
+// 	 * @param  String|Array $value The field value
+// 	 * @param  Array        $field The field
+// 	 */
+// 	function _event_customfield_meta_display_revisions_fields( $value, $field ) {
+// 	    global $revision;
+// 	    return get_metadata( 'post', $revision->ID, $field, true );
+// 	}*/
 }

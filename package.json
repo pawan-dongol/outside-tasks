@@ -1,0 +1,31 @@
+{
+  "name": "gutenberg-block",
+  "version": "1.0.0",
+  "description": "Gutenberg block developement",
+  "main": "block.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pawan-dongol/outside-tasks.git"
+  },
+  "keywords": [
+    "gutenberg",
+    "block-editor"
+  ],
+  "author": "Pawan Dongol",
+  "license": "GPL-2.0-only",
+  "bugs": {
+    "url": "https://github.com/pawan-dongol/outside-tasks/issues"
+  },
+  "homepage": "https://github.com/pawan-dongol/outside-tasks#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "16.1.2"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+  "build": "wp-scripts build"
+  }
+}
