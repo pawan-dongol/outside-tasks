@@ -1,17 +1,35 @@
 import { registerBlockType } from '@wordpress/blocks';
 
+const { 
+    RichText,
+    InspectorControls,
+    MediaUpload
+}  = wp.blockEditor;
+
+const { 
+    PanelBody,
+    IconButton
+} = wp.components;
+
+
 registerBlockType( 'event/slick-slider', {
     title: 'Event Slider',
-    description: 'Block to generate slider using slick',
+    description: 'Block to generate slider',
     icon: 'slides',
     category: 'common',
 
     // custom attributes
     attributes:{
-    	content:{
+    	title:{
     		type: 'string',
-    		source: 'text',
-    	}
+    		source: 'html',
+            selector: 'h2'
+    	},
+        sliderImage: {
+            type: 'string',
+            default: null
+        }
+      
     },
 
 
@@ -19,17 +37,78 @@ registerBlockType( 'event/slick-slider', {
     edit( { attributes, setAttributes } ) {
 
     	// Custom function
+       const {
+            title,
+            sliderImage
+       } = attributes;
 
-    	function updateTitle(event){
-    		setAttributes( { content : event.target.value } );
-    	}
+       function onChangeTitle(newTitle){
+            setAttributes( { title: newTitle } );
+       }
 
-    	return <input type="text" value={ attributes.content }  onChange={ updateTitle } />;
+       function onSelectImage(newImage){
+            setAttributes( { sliderImage: newImage.sizes.full.url } );
+       }
+
+       return ([
+            <InspectorControls style={ { marginBottom: '40px' } }>
+                <PanelBody title={ 'Slider Image Settings' }>
+                    <p><strong> Select a Slider Image:</strong></p>
+                    <MediaUpload  
+                        onSelect={ onSelectImage }
+                        type="image"
+                        value={ sliderImage } 
+                        render={ ( { open } ) => {
+                            return (
+                                  <IconButton
+                                onClick={ open }
+                                icon="upload"
+                                className="editor-media-placeholder__button is-button is-default is-large">
+                                    Slider Image
+                                </IconButton>       
+                            );
+                    } }>
+                    </MediaUpload>
+                </PanelBody>
+            </InspectorControls>,
+            
+            <div class="slider-container"  style={{ 
+                backgroundImage: `url(${sliderImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+            }} >
+
+                <RichText key="editable"
+                          tagName="h2"  
+                          placeholder="Slider Title"
+                          value={ attributes.title }
+                          onChange={ onChangeTitle }
+                          />
+            </div>
+        ]);
     },
 
     save( { attributes })
     { 
-    	return <p> Title: {attributes.content} </p>;
+    	const {
+            title,
+            sliderImage
+        } = attributes;
+
+        return (
+           <div class="slider-container"  style={{ 
+                backgroundImage: `url(${sliderImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+            }} >
+
+                <RichText.Content tagName="h2"  
+                         value={ title }
+                />
+            </div>
+        );
 
     }
 } );

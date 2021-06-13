@@ -24,3 +24,9 @@ Above example shortcode will display 10 latest events with the event type as “
 	** Event Slider
 		* Normal slider with title and image
 		* You can use any slider plugin (slick or any other )
+
+
+#command need to remember
+* npm init for set package.json 
+* npm install --save-dev --save-exact @wordpress/scripts for gutenberg block js
+* npm run build (for npm watch in each changes in js)
