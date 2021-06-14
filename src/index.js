@@ -97,13 +97,10 @@ registerBlockType( 'event/slick-slider', {
         } = attributes;
 
         return (
-           <div class="slider-container"  style={{ 
-                backgroundImage: `url(${sliderImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-            }} >
-
+           <div class="slider-container">
+                <div>
+                    <img src={ sliderImage } />
+                </div>
                 <RichText.Content tagName="h2"  
                          value={ title }
                 />

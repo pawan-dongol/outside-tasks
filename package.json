@@ -4,7 +4,8 @@
   "description": "Gutenberg block developement",
   "main": "block.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,5 @@
   "homepage": "https://github.com/pawan-dongol/outside-tasks#readme",
   "devDependencies": {
     "@wordpress/scripts": "16.1.2"
-  },
-  "scripts": {
-    "build": "wp-scripts build",
-    "start": "wp-scripts start",
-  "build": "wp-scripts build"
   }
 }
