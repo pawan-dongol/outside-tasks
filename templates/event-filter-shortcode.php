@@ -5,20 +5,14 @@ global $wp_query,
 $post;
 
 $atts = shortcode_atts( array(
-    'type' => '',
-    'limit' => ''
+    'slug' => '',
 ), $atts );
 
 $loop = new WP_Query( array(
-    'posts_per_page'    => absint($atts['limit']),
+    'posts_per_page'    => 10,
     'post_type'         => 'event',
     'order'             => 'DESC',
     'orderBy'			=> 'date',
-    'tax_query'         => array( array(
-        'taxonomy'  => 'event_type',
-        'field'     => 'slug',
-        'terms'     => array( sanitize_title( $atts['type'] ) )
-    ) )
 ) );
 
 if( ! $loop->have_posts() ) {
@@ -32,10 +26,42 @@ if( ! $loop->have_posts() ) {
 	 width:100%;
 	}
 	</style>
+	<?php $terms = get_terms(
+		    array(
+		        'taxonomy'   => 'event_type',
+		        'hide_empty' => true,
+		    )
+		);?>
+
+		<form id="eventform" method="get">
+
+    		<label>Filter by Event type</label>
+			<select name="type">
+				<?php 
+				if ( ! empty( $terms ) && is_array( $terms ) ) {
+			    // add links for each category
+							    foreach ( $terms as $term ) { ?>
+							    	<option value="<?php echo esc_attr($term->slug);?>">
+							            <?php echo esc_html($term->name); ?>
+							         </option>
+							        <?php
+							    }
+							}
+				?>
+			</select>
+			<label>Filter by Date</label>
+			<select name="date">
+				<option value="asc">Latest</option>
+				<option value="asc">Oldest</option>
+			</select>
+			
+    	</form>
     <table>
+    	
+
     	<tr>
     		<th>Title</th>
-        	<th>Event Type</th>
+        	
         	<th>Description</th>
         	<th>Location</th>
         	<th>Time</th>
@@ -46,12 +72,12 @@ if( ! $loop->have_posts() ) {
 	   <?php
 	    while( $loop->have_posts() ) {
 	        $loop->the_post();
-	        $type = get_term_by('slug',$atts['type'],'event_type');
+	      
 	        $customfield = get_post_meta(get_the_ID(),'_event_customfield_meta',true);
 	        ?>
 	       	<tr>
 	       		<td><?php the_title();?></td>
-	       		<td><?php echo esc_html($type->name);?></td>
+	       	
 	       		<td><?php the_excerpt();?></td>
 
 	       		<!-- Event Location -->

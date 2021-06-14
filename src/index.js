@@ -110,23 +110,3 @@ registerBlockType( 'event/slick-slider', {
 
     }
 } );
-
-wp.hooks.addFilter(
-    'blocks.getSaveElement',
-    'event/slick-slider',
-    modifyGetSaveContentExtraProps
-);
-
-
-function modifyGetSaveContentExtraProps( element, blockType, attributes  ) {
-    
-    if (blockType.name !== 'core/table') {
-        return element;
-    }
-
-    return (
-        <div className='slider-container'>
-            {element}
-        </div>
-    );
-}

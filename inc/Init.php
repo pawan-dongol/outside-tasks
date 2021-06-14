@@ -24,6 +24,7 @@ final class Init
 			Base\EventTypeWebinarLimit10ShortCode::class,
 			Base\EventCustomApi::class,
 			Base\EventSliderGutenbergBlock::class,
+			Base\EventFilterShortCode::class,
 		];
 	}
 

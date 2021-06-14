@@ -46,3 +46,13 @@ register_deactivation_hook( __FILE__, 'deactivate_ot_event_plugin' );
 if( class_exists( 'Inc\\Init' ) ){
 	Inc\Init::register_services();
 }
+
+
+function template_call() {
+	 $path = plugin_dir_path( dirname( __FILE__) );
+    require_once( "$path/templates/ajaxfilter.php" );
+    die();
+}
+
+add_action('wp_ajax_nopriv_template_call', 'template_call');
+		add_action('wp_ajax_template_call', 'template_call');
