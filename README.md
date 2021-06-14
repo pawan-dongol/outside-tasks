@@ -32,3 +32,5 @@ Above example shortcode will display 10 latest events with the event type as “
 * npm init for set package.json 
 * npm install --save-dev --save-exact @wordpress/scripts for gutenberg block js
 * npm run build (for npm watch in each changes in js)
+* npm cache clean --force
+* npm cache verify

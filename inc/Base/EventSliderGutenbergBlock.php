@@ -31,11 +31,14 @@ class EventSliderGutenbergBlock extends BaseController
 		register_block_type('event/slick-slider', array(
 			'editor_script' => 'event-block-slider-js',
 			'style' => 'event-block-slider-style',
-			// 'render_callback' => array($this, 'event_gutenberg_slider_render'),
+			'render_callback' => array($this, 'event_gutenberg_slider_render'),
 		));
 	}
 
-	// function event_gutenberg_slider_render($attributes, $content) {
-	// 	print_r($content);
-	// }
+	function event_gutenberg_slider_render($attributes, $content) {?>
+		    <div class="slider-container">
+		    	<?php echo  $content;?>
+		    </div>
+		<?php 
+	}
 }
