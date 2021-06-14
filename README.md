@@ -25,6 +25,8 @@ Above example shortcode will display 10 latest events with the event type as “
 		* Normal slider with title and image
 		* You can use any slider plugin (slick or any other )
 
+#Shortcode for event filter
+* [event-filter]
 
 #command need to remember
 * npm init for set package.json 
