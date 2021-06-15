@@ -56,11 +56,3 @@ function template_call() {
 
 add_action('wp_ajax_nopriv_template_call', 'template_call');
 add_action('wp_ajax_template_call', 'template_call');
-
-add_filter( 'render_block', 'wrap_table_block', 10, 2 );
-function wrap_table_block( $block_content, $block ) {
-  if ( 'event/slick-slider' === $block['blockName'] ) {
-    $block_content = '<div class="example">' . $block_content . '</div>';
-  }
-  return $block_content;
-}
