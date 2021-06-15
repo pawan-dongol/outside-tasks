@@ -1,5 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 
+alert('test');
+
 const { 
     RichText,
     InspectorControls,
@@ -83,7 +85,7 @@ registerBlockType( 'event/slick-slider', {
                 <RichText key="editable"
                           tagName="h2"  
                           placeholder="Slider Title"
-                          value={ attributes.title }
+                          value={ title }
                           onChange={ onChangeTitle }
                           />
             </div>
@@ -98,14 +100,18 @@ registerBlockType( 'event/slick-slider', {
         } = attributes;
 
         return (
-       
-                <div>
-                    <img src={ sliderImage } />
-                </div>,
+            
+            <div class="slider-container"  style={{ 
+                backgroundImage: `url(${sliderImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+            }} >
+              
                 <RichText.Content tagName="h2"  
                          value={ title }
                 />
-          
+            </div>
         );
 
     }
