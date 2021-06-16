@@ -1,7 +1,5 @@
 import { registerBlockType } from '@wordpress/blocks';
 
-alert('test');
-
 const { 
     RichText,
     InspectorControls,

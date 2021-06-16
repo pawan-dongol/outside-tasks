@@ -47,12 +47,11 @@ if( class_exists( 'Inc\\Init' ) ){
 	Inc\Init::register_services();
 }
 
+add_action('wp_ajax_eventfilter', 'event_filter_function'); // wp_ajax_{ACTION HERE} 
+add_action('wp_ajax_nopriv_eventfilter', 'event_filter_function');
 
-function template_call() {
-	 $path = plugin_dir_path( dirname( __FILE__) );
-    require_once( "$path/templates/ajaxfilter.php" );
-    die();
+function event_filter_function(){
+	$path = plugin_dir_path( dirname( __FILE__) ).'ot-events';
+	require_once( "$path/templates/ajaxfilter.php" );
+	die();
 }
-
-add_action('wp_ajax_nopriv_template_call', 'template_call');
-add_action('wp_ajax_template_call', 'template_call');

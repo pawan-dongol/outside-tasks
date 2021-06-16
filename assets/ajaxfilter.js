@@ -1,31 +1,21 @@
 
-jQuery(document).ready(function ($) {
-
-    $('#eventform select').on('change',function (e) {
-
-        // var form = document.forms.namedItem("eventform"); // high importance!, here you need change 
-        
-        var form = new FormData()
-
-        form.append('filter', $("#eventform select").val());
-        form.append('action', 'ajax_template_call');
-       
-        e.preventDefault();
-       
-        $.ajax({
-            url: ajaxStuff.ajaxurl,
-            type: "GET",
-            data: form,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                console.log('response' + JSON.stringify(data));
-            },
-            error: function () {
-              // handle error case here
-            }
-        });
-    });
-
-    $('').trigger('click');
+jQuery('#filter select').on('change',function (e) {
+  ajaxFunction();
 });
+
+function ajaxFunction(){
+     var filter = jQuery('#filter');
+     // console.log(filter.attr('action'));
+    jQuery.ajax({
+        url:filter.attr('action'),
+        data:filter.serialize(), // form data
+        type:filter.attr('method'), // POST
+        beforeSend:function(xhr){
+            jQuery('#response').html('Processing...'); // changing the button label
+        },
+        success:function(data){
+            jQuery('#response').html(data); // insert data
+        }
+    });
+    return false;
+}
