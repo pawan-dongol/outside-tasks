@@ -26,8 +26,8 @@ class EventCPT
 				'supports' => array(
                   'title','editor','thumbnail'
 	              ),
-	           
-	             'show_in_nav_menus' => true, // Set to `false`, if users are not allowed to edit/delete existing posts
+	           	'show_in_rest'	=>true,
+	            'show_in_nav_menus' => true, // Set to `false`, if users are not allowed to edit/delete existing posts
 				'show_in_menu' =>false
 			)
 		);

@@ -71,14 +71,14 @@ class EventCustomField
         <tr>
             <td>Event Start Date</td>
             <td>
-                <input type="text" class="large-text" name="_event_customfield_meta_custom_metabox[event_start_date]" id="_event_start_date" value="<?php echo esc_attr( $details['event_start_date'] ); ?>" placeholder="dd/mm/yyyy">
+                <input type="date" class="large-text" name="_event_customfield_meta_custom_metabox[event_start_date]" id="_event_start_date" value="<?php echo esc_attr( $details['event_start_date'] ); ?>" placeholder="dd/mm/yyyy">
             </td>
         </tr>
 
         <tr>
             <td>Event End Date</td>
             <td>
-                <input type="text" class="large-text" name="_event_customfield_meta_custom_metabox[event_end_date]" id="_event_end_date" value="<?php echo esc_attr( $details['event_end_date'] ); ?>" placeholder="dd/mm/yyyy">
+                <input type="date" class="large-text" name="_event_customfield_meta_custom_metabox[event_end_date]" id="_event_end_date" value="<?php echo esc_attr( $details['event_end_date'] ); ?>" placeholder="dd/mm/yyyy">
             </td>
         </tr>
 

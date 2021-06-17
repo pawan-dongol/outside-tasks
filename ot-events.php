@@ -51,7 +51,7 @@ add_action('wp_ajax_eventfilter', 'event_filter_function'); // wp_ajax_{ACTION H
 add_action('wp_ajax_nopriv_eventfilter', 'event_filter_function');
 
 function event_filter_function(){
-	$path = plugin_dir_path( dirname( __FILE__) ).'ot-events';
+	$path = plugin_dir_path( __FILE__ );
 	require_once( "$path/templates/ajaxfilter.php" );
 	die();
 }
