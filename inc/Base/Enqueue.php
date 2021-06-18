@@ -15,7 +15,6 @@ class Enqueue extends BaseController
 	
 	public function register(){
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueue') );
-		// add_action( 'admin_enqueue_scripts', array ($this, 'enqueue') );
 	}
 
 	public function enqueue(){
@@ -26,5 +25,6 @@ class Enqueue extends BaseController
 		wp_enqueue_script( 'custom', $this->plugin_url.'assets/custom.js',array(), '20181214', true);
 		wp_enqueue_script( 'ajax-stuff', $this->plugin_url . 'assets/ajaxfilter.js', array( 'jquery' ), true,true );
 		wp_localize_script( 'ajax-stuff', 'ajaxStuff', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_enqueue_style( 'ot-events-style', $this->plugin_url.'assets/css/my-style.css' );
 	}
 }
